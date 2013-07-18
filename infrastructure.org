@@ -1,4 +1,4 @@
-#+TITLE:    Django Based Web Development 
+#+TITLE:     Web Development, Infrastructure and More
 #+AUTHOR:    Nic M
 #+DATE:      June 2013
 #+LANGUAGE:  en
@@ -20,9 +20,9 @@
      correctly in conjunction. 
    - 
 **  Infrastructure 
-    + [ ] Nginx
-    + [ ] Django
-    + [ ] PostgreSQL
+    + [X] Nginx
+    + [X] Django
+    + [X] PostgreSQL
     + [ ] Memcached 
 ** Getting Everyone to Play Nice Together
 *** Nginx and Django
@@ -37,7 +37,18 @@
     - another good option to know for *pip* is /--outdated/ 
     - FastCGI, i think I got it set up but now I need to wrap my head
       around *Nginx* configurations. I guess what I would like to know
-      if I can have different instances of django or other services
-      such as *hunchentoot* to run on the same server at the same time
-      and server different applications. 
-    - I used *Django* documentations to get this done. 
+      if I can have different instances of django or other services such
+      as *hunchentoot* to run on the same server at the same time and
+      server different applications.
+    - I used *Django* documentations to get this done.
+    - As of today, [2013-07-18 Thu], I have *Django* working with
+      *Nginx* and *Bootstrap*. In the process I have learned few things
+      about both *Django* and *Nginx* configurations especially with
+      respect to static files which I needed to get done to have
+      *Bootstrap* working
+    - 
+*** 
+
+;;; Local Variables:
+;;; fill-column: 72
+;;; End:
