@@ -47,7 +47,37 @@
       respect to static files which I needed to get done to have
       *Bootstrap* working
     - 
-*** 
+*** PostgreSQL 
+    - [2013-07-21 Sun], Took me a good amount of the day but I managed
+      to have *PostgreSQL* up and running in the form that I would like
+      it to be. The next thing on my list now is to read on *Django*
+      /models/ and /session and user management/. 
+    - With these two pieces in place, I would expect to have a
+      rudimentary version of /Academi/ or whatever it will be called at
+      a later date
+*** Django Models 
+    - 
+*** Nginx and Hunchentoot
+    - I decided that I will have a *Hunchentoot* project to host my
+      homepage and that will over time develop into a portfolio but also
+      an experimental place for web tools I would like to see for
+      personal use and maybe later for public use
+    - The initial coupling is not in place and serves *Hunchentoot*
+      welcome page. 
+    - I also intend to build the stock simulator project on top on
+      *Hunchentoot* but I have not put these pieces in place at the
+      moment 
+    - My idea is to work with *Hunchentoot*, *Bootstrap* and many other
+      pieces I would need along the road. 
+    - 
+*** SBCL
+    - I am attempting to participate in SBCL development and the first
+      attempt has been to add some restarts to OPEN. This has exposed me
+      to how the compiler interacts with the underlying OS but it also
+      has been slow progress trying to figure out what's the best style
+      and approach. I am hoping this will not be the last attempt but
+      that a year from now I can look back and smile as where it all
+      started! 
 
 ;;; Local Variables:
 ;;; fill-column: 72
