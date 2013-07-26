@@ -78,7 +78,22 @@
       and approach. I am hoping this will not be the last attempt but
       that a year from now I can look back and smile as where it all
       started! 
-
+***  Misc
+     - [2013-07-26 Fri], I printed all source code of ~CL-PPCRE~ as Xach
+       and few other people have touted it as one of the programs which
+       they thought the source was worth reading. I now have 100 pages
+       of the source and I am debating whether to print them on paper or
+       just upload them on my iPad. I think I will start with the iPad
+       and see how that does...I can scribble notes and annotate the PDF
+       on my iPad so I don't think it will be different from having
+       actual printed pages!! The task is accomplished using ~enscript~
+       and ~ps2pdf~. Here is the command to generate the pages which I
+       would like to convert into a script I can pass few variable to be
+       able to automate this
+       #+BEGIN_SRC bash
+       enscript -f "Courier7.5" --header="$" -e -o [output file] *.asd *.lisp
+       #+END_SRC 
+     - 
 ;;; Local Variables:
 ;;; fill-column: 72
 ;;; End:
