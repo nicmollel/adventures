@@ -91,7 +91,7 @@
        would like to convert into a script I can pass few variable to be
        able to automate this
        #+BEGIN_SRC bash
-       enscript -f "Courier7.5" --header="$" -e -o [output file] *.asd *.lisp
+       enscript -f "Courier7" -Eelisp --toc --header="$" -e -o [output file] *.asd *.lisp
        #+END_SRC 
      - 
 ;;; Local Variables:
