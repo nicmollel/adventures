@@ -91,8 +91,24 @@
        would like to convert into a script I can pass few variable to be
        able to automate this
        #+BEGIN_SRC bash
-       enscript -f "Courier7" -Eelisp --toc --header="$" -e -o [output file] *.asd *.lisp
+       enscript -f "Courier9" -Eelisp --toc --header='$n' -e -o [output file] *.asd *.lisp
        #+END_SRC 
+     - [2013-07-27 Sat], *Building CCL on Raspberry Pi*
+       CCL is hosted in an ~svn~ repository. To check it out, run the
+       following
+       #+BEGIN_SRC
+       svn co http://svn.clozure.com/publicsvn/openmcl/trunk/linuxarm/ccl
+       #+END_SRC
+       in the resulting directory, make sure ~FLOAT_ABI~ is set to
+       /hard/ in ~[ccl top directory]/lisp-kernel/linuxarm/float_abi.mk~
+       in this folder, run the commands ~make clean && make~ to rebuild
+       the kernel. Then rebuild LISP sources with
+       #+BEGIN_SRC lisp
+       ./armcl
+       ?(ccl:rebuild-ccl :full t)
+       #+ENG_SRC 
+       When updating from the repository, run ~svn update~ and repeat
+       the steps above! 
      - 
 ;;; Local Variables:
 ;;; fill-column: 72
