@@ -11,7 +11,10 @@
     
 * On Web Development
 ** All Other Thoughts
-   - Support *OAuth* with *OpenID*, *Google*, *Yahoo*
+   - Support *OAuth* with *OpenID*, *Google*, *Yahoo*, *LinkedIn*
+     + *LinkedIn* was not initially listed but I think it has some hold
+       in African market which will be the target of the finished
+       product. 
      + *Facebook* will be left out here because the target market. This
        might change if there appear to be a demand
    - Before I even got anything off the ground, I had to spend time
@@ -68,12 +71,23 @@
       experiences and also some of the instructions that I found useful
       in the process. 
       + Link:
-      + http://goo.gl/8q922K
-	(Building a scalable read-time search architecture with Sphinx)
+	* http://goo.gl/8q922K
+	  (Building a scalable read-time search architecture with Sphinx)
 *** Django Models 
     - 
 *** Django Forms and Bootstrap
-    - [2013-08-01 Thu], I did some reading on 
+    - [2013-08-01 Thu], I did some reading on models and I think I have
+      a sketch of what I will be looking for. The next step is /forms/
+      as this will be a form driven application mostly. The first huddle
+      is how to integrate *Bootstrap* into *Django*'s already existing
+      infrastructure. To this end, there are a number of options but I
+      think I will go with extending *Django* form object. This is a lot
+      of work but it gives me much more opportunity to learn and peak
+      into *Django* implementation which could be better later when
+      working on *Hunchentoot* projects. 
+      + Link(s):
+	* http://goo.gl/lO9fB7
+	  Rendering Django forms for Twitter Bootstrap
 *** Nginx and Hunchentoot
     - I decided that I will have a *Hunchentoot* project to host my
       homepage and that will over time develop into a portfolio but also
