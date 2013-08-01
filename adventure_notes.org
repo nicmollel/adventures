@@ -25,6 +25,7 @@
     + [X] Django
     + [X] PostgreSQL
     + [ ] Memcached 
+    + [ ] Sphinx (Search)
 ** Getting Everyone to Play Nice Together
 *** Nginx and Django
     - First make sure everything is uptodate. Also update *pip* to be
@@ -56,8 +57,23 @@
     - With these two pieces in place, I would expect to have a
       rudimentary version of /Academi/ or whatever it will be called at
       a later date
+    - [2013-08-01 Thu], When /Academi/ is up and running, I will need
+      some level of keyword and full text search. One of the ideas I
+      have seen is to use *PostgreSQL* to do full text search but it
+      appears that this might not scale depending on the future of the
+      application. The alternative is to use [[http://sphinxsearch.com/][*Sphinx*]] and couple it with
+      *PostgreSQL* to produce the search capability I am looking for at
+      a reasonable cost 
+    - I will be looking at this option and will collect here my
+      experiences and also some of the instructions that I found useful
+      in the process. 
+      + Link:
+      + http://goo.gl/8q922K
+	(Building a scalable read-time search architecture with Sphinx)
 *** Django Models 
     - 
+*** Django Forms and Bootstrap
+    - [2013-08-01 Thu], I did some reading on 
 *** Nginx and Hunchentoot
     - I decided that I will have a *Hunchentoot* project to host my
       homepage and that will over time develop into a portfolio but also
@@ -71,43 +87,43 @@
     - My idea is to work with *Hunchentoot*, *Bootstrap* and many other
       pieces I would need along the road. 
     - 
-*** SBCL
-    - I am attempting to participate in SBCL development and the first
-      attempt has been to add some restarts to OPEN. This has exposed me
-      to how the compiler interacts with the underlying OS but it also
-      has been slow progress trying to figure out what's the best style
-      and approach. I am hoping this will not be the last attempt but
-      that a year from now I can look back and smile as where it all
-      started! 
-***  Misc
-     - [2013-07-26 Fri], I printed all source code of ~CL-PPCRE~ as Xach
-       and few other people have touted it as one of the programs which
-       they thought the source was worth reading. I now have 100 pages
-       of the source and I am debating whether to print them on paper or
-       just upload them on my iPad. I think I will start with the iPad
-       and see how that does...I can scribble notes and annotate the PDF
-       on my iPad so I don't think it will be different from having
-       actual printed pages!! The task is accomplished using ~enscript~
-       and ~ps2pdf~. Here is the command to generate the pages which I
-       would like to convert into a script I can pass few variable to be
-       able to automate this
-       #+BEGIN_SRC bash
-       enscript -f "Courier9" -Eelisp --toc --header='$n' -e -o [output file] *.asd *.lisp
-       #+END_SRC 
-     - [2013-07-27 Sat], *Building CCL on Raspberry Pi*
-       CCL is hosted in an ~svn~ repository. To check it out, run the
-       following
-       #+BEGIN_SRC
-       svn co http://svn.clozure.com/publicsvn/openmcl/trunk/linuxarm/ccl
-       #+END_SRC
-       in the resulting directory, make sure ~FLOAT_ABI~ is set to
-       /hard/ in ~[ccl top directory]/lisp-kernel/linuxarm/float_abi.mk~
-       in this folder, run the commands ~make clean && make~ to rebuild
-       the kernel. Then rebuild LISP sources with
-       #+BEGIN_SRC lisp
-       ./armcl
-       ?(ccl:rebuild-ccl :full t)
-       #+ENG_SRC 
-       When updating from the repository, run ~svn update~ and repeat
-       the steps above! 
-     - 
+* Misc
+   - [2013-07-26 Fri], I printed all source code of ~CL-PPCRE~ as Xach
+     and few other people have touted it as one of the programs which
+     they thought the source was worth reading. I now have 100 pages
+     of the source and I am debating whether to print them on paper or
+     just upload them on my iPad. I think I will start with the iPad
+     and see how that does...I can scribble notes and annotate the PDF
+     on my iPad so I don't think it will be different from having
+     actual printed pages!! The task is accomplished using ~enscript~
+     and ~ps2pdf~. Here is the command to generate the pages which I
+     would like to convert into a script I can pass few variable to be
+     able to automate this
+     #+BEGIN_SRC bash
+     enscript -f "Courier9" -Eelisp --toc --header='$n' -e -o [output file] *.asd *.lisp
+     #+END_SRC 
+   - [2013-07-27 Sat], *Building CCL on Raspberry Pi*
+     CCL is hosted in an ~svn~ repository. To check it out, run the
+     following
+     #+BEGIN_SRC
+     svn co http://svn.clozure.com/publicsvn/openmcl/trunk/linuxarm/ccl
+     #+END_SRC
+     in the resulting directory, make sure ~FLOAT_ABI~ is set to
+     /hard/ in ~[ccl top directory]/lisp-kernel/linuxarm/float_abi.mk~
+     in this folder, run the commands ~make clean && make~ to rebuild
+     the kernel. Then rebuild LISP sources with
+     #+BEGIN_SRC lisp
+     ./armcl
+     ?(ccl:rebuild-ccl :full t)
+     #+ENG_SRC 
+     When updating from the repository, run ~svn update~ and repeat
+     the steps above! 
+   - 
+* SBCL
+  - I am attempting to participate in SBCL development and the first
+    attempt has been to add some restarts to OPEN. This has exposed me
+    to how the compiler interacts with the underlying OS but it also
+    has been slow progress trying to figure out what's the best style
+    and approach. I am hoping this will not be the last attempt but
+    that a year from now I can look back and smile as where it all
+    started! 
