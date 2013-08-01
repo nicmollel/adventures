@@ -1,3 +1,4 @@
+;;; -*- mode: org; fill-column: 72; -*-
 #+TITLE:     Web Development, Infrastructure and More
 #+AUTHOR:    Nic M
 #+DATE:      June 2013
@@ -110,6 +111,3 @@
        When updating from the repository, run ~svn update~ and repeat
        the steps above! 
      - 
-;;; Local Variables:
-;;; fill-column: 72
-;;; End:
