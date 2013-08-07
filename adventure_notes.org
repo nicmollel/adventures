@@ -88,6 +88,25 @@
       + Link(s):
 	* http://goo.gl/lO9fB7
 	  Rendering Django forms for Twitter Bootstrap
+*** Django and OAuth
+    - [2013-08-07 Wed], One of the main thing I think of when
+      considering the architecture of a web application is the necessity
+      of creating new credentials for each web application. I hate
+      having this as the only option because I am terrible at managing
+      credentials and so would like an option to use already established
+      credentials with the new application if I want to. For this
+      reason, I find *OAuth* and *OpenID* to be great ideas for the
+      evolution of the web. 
+    - Based on the above, ~Academi~ will support these authentication
+      protocols so I went out to see how to integrate them in
+      *Django*. Below are the links of the way to approach this and I am
+      taking them as work in progress that might require tuning from my
+      end. 
+      + Links: 
+	* http://goo.gl/RDvo1O
+	  Building a True OAuth 2.0 API with Django and Tasty Pie
+	* http://goo.gl/yEhX7F
+	  Django-social-auth (Github)
 *** Nginx and Hunchentoot
     - I decided that I will have a *Hunchentoot* project to host my
       homepage and that will over time develop into a portfolio but also
