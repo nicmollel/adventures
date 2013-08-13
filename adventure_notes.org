@@ -23,7 +23,7 @@
      difference between *Host* and *Hostname* and how to use them
      correctly in conjunction. 
    - 
-**  Infrastructure 
+** Infrastructure 
     + [X] Nginx
     + [X] Django
     + [X] PostgreSQL
@@ -35,9 +35,9 @@
       sure the version in use is the latest.
 
       This is how to update *pip*
-      #+BEGIN_CODE
+      #+BEGIN_SRC
       pip install --upgrade [packagename]
-      #+END_CODE
+      #+END_SRC
       /packagename/ can be *pip* for a self update. 
     - another good option to know for *pip* is /--outdated/ 
     - FastCGI, i think I got it set up but now I need to wrap my head
@@ -151,7 +151,19 @@
      #+ENG_SRC 
      When updating from the repository, run ~svn update~ and repeat
      the steps above! 
-   - 
+   - [2013-08-09 Fri], *Self Hosted Email*
+     This is something I have always thought about but everyone
+     laments how complicated a process is and not really worth the
+     time. But with all the latest uproar on surveillance and the
+     dream to always get away from /gmail/ to something self hosted
+     and likely more secure, I think I will be taking that plunge
+     before the end of the year. Through the discussions on the
+     closure of *Lavabit* and later *Silent Mail*, someone posted the
+     folling link as the best they have come through on setting up a
+     self hosted mail server. The link is below. I will look at it and
+     work through it and see where it will take me. 
+     + Link: 
+       * http://goo.gl/r5QMR3
 * SBCL
   - I am attempting to participate in SBCL development and the first
     attempt has been to add some restarts to OPEN. This has exposed me
@@ -160,3 +172,4 @@
     and approach. I am hoping this will not be the last attempt but
     that a year from now I can look back and smile as where it all
     started! 
+* CL-LEDGER
