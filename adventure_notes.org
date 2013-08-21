@@ -161,9 +161,21 @@
      closure of *Lavabit* and later *Silent Mail*, someone posted the
      folling link as the best they have come through on setting up a
      self hosted mail server. The link is below. I will look at it and
-     work through it and see where it will take me. 
+     work through it and see where it will take me.
+
+     [2013-08-21 Wed], I took a look at this again and I am going to
+     take a shot at it. I will not be using my *Linode* instance but
+     will be using the free *AWS* instance for this instead. I this
+     case, i can mess things up as much as I want and rebuild the crap
+     out of it without hesitation. I also added few links on what I
+     think I will be attempting below
      + Link: 
        * http://goo.gl/r5QMR3
+       * http://goo.gl/0eqVWj
+	 (Mail Server Setup: Part 1 – Postfix and PostgreSQL)
+       * http://goo.gl/4pgfb3
+	 (Host Email with Postfix, Dovecot and Postgres on Debian)
+   - 
 * SBCL
   - I am attempting to participate in SBCL development and the first
     attempt has been to add some restarts to OPEN. This has exposed me
