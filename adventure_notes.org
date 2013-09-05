@@ -88,6 +88,19 @@
       + Link(s):
 	* http://goo.gl/lO9fB7
 	  Rendering Django forms for Twitter Bootstrap
+*** Django Forms vs Model Forms
+    - [2013-08-26 Mon], I did some customization to adopt *Bootstrap
+      3.0* to work with *Django* forms. I like what I have at the
+      moment. I also know that since couple of the forms for the
+      ~Academi~ app are going to be entryways into the database, I have
+      been wondering if using ~ModelForm~ might not have been a good
+      approach. Does going with ~Form~ instead of ~ModelForm~ make the
+      design any weaker? I am probably learning more going the long way
+      but also might find it a smoother ride as it might be a much
+      harder undertaking to plug *Bootstrap* into ~ModelForm~. Thinking
+      about it, I think I will implement this to completion and if I
+      need to reduce the size, then at that point I might do some
+      refactoring and adopt ~ModelForm~. 
 *** Django and OAuth
     - [2013-08-07 Wed], One of the main thing I think of when
       considering the architecture of a web application is the necessity
@@ -175,7 +188,23 @@
 	 (Mail Server Setup: Part 1 – Postfix and PostgreSQL)
        * http://goo.gl/4pgfb3
 	 (Host Email with Postfix, Dovecot and Postgres on Debian)
-   - 
+   - [2013-09-05 Thu], *CL JSON Libraries*
+     Xach posted this on ~Planet Lisp~ and since I will be working on
+     web applications using CL, I thought it would be a good idea to
+     have this saved up for future reference.
+
+     Link:
+     + SabraOnTheHill, Json Libraries
+       http://goo.gl/QKfK7H
+   - [2013-09-05 Thu], *1974 TI Calculator Simulation*
+     Ken Shirriff reverse engineers a ~TI~ calculator from 1974 and
+     writes a simulator for it in JavaScript and Python. I am keeping
+     this note and link here because this project is just plain cool and
+     I wish I could do something even remotely close to this!
+
+     Link:
+     + Reversing Sinclair's amazing 1974 calculator hack
+       http://righto.com/sinclair
 * SBCL
   - I am attempting to participate in SBCL development and the first
     attempt has been to add some restarts to OPEN. This has exposed me
