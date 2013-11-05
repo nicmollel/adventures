@@ -205,6 +205,17 @@
      Link:
      + Reversing Sinclair's amazing 1974 calculator hack
        http://righto.com/sinclair
+   - [2013-09-22 Sun], *Prevent Edimax Wifi dongle from sleeping*
+     I am using an ~Edimax~ on my Raspberry Pi but as I am working to
+     convert it into a media center, I have been getting problems where
+     it keeps disconnecting. I came across this solution while looking
+     for something different. I am putting it here so that I can
+     remember in the future to modify the cron job so that i can ping
+     correct network.
+
+     Link:
+     + Is your wifi dongle dropping connection?
+       http://goo.gl/r7IC9t
 * SBCL
   - I am attempting to participate in SBCL development and the first
     attempt has been to add some restarts to OPEN. This has exposed me
@@ -214,3 +225,26 @@
     that a year from now I can look back and smile as where it all
     started! 
 * CL-LEDGER
+* Wifi Audio
+  Since my speakers broke down about two years ago, I have been telling
+  myself that I needed to upgrade my sound system. Two years is a long
+  time to make a decision on anything but I generally get by with
+  headphones when I really want to get quality sound. But a great sound
+  system is a wish I cannot resist.
+
+  The way I listen to audio has also changed in these two years and I
+  have been torn 
+
+  [2013-09-18 Wed]
+  I have this currently working but not sure how it's gonna work with
+  usb DAC and not sure why it's actually working as it was not initially
+  doing so! 
+** Bill of Material 
+** AudioEngine
+** Links
+   - PiFi Mini, http://goo.gl/Bfhx8X
+   - http://drewlustro.com/hi-fi-audio-via-airplay-on-raspberry-pi
+   - Rpi, Shairport and USB Audio, http://goo.gl/BpHOSb 
+   - Raspberry Pi shairport build instruction
+     http://goo.gl/9xpNqz
+     
