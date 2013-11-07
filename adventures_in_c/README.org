@@ -10,4 +10,25 @@
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 * Adventures in C
-* 
+** Commandline Arguments
+   [2013-11-05 Tue]
+
+   One of the things that college did not teach me, was using libraries
+   and developing a habit of reading and learning from code written by
+   other people. As a results, we always had to write everything from
+   scratch and there was rare code reuse and so all designs were for
+   throwing away. So as a result, you don't learn how to use libraries,
+   you don't get to read sources of those libraries and learn what makes
+   them good at what they do, and you don't evolve your code to reflect
+   things you learn along the way in the craft. There are times when you
+   want to write throw away code and revisions are absolutely a waste in
+   this case but for long-term projects, they should reflect your
+   maturity over time!
+
+   All programs I wrote in college with one exception were commandline
+   programs. So every semester and assignment, I would spend time
+   writing argument parsing code which was always project specific and
+   very repetitive. So as I find my way around C, I thought
+   understanding how to handle commandline arguments using available
+   library would be a good lesson on working with the language. What is
+   learned here I have already used in my ongoing project AudioManager!
