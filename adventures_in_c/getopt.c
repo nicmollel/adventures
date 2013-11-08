@@ -4,6 +4,12 @@
   Nov 2013
   
   Adventures in C: Commandline Arguments
+  
+  Take arguments to do the following: 
+  - List given path (-p)
+  - Sleep for given time (-t)
+  - Show user's home directory (-h)
+  - List user's home directory (-L)
  */
 
 #include <stdio.h>
@@ -15,34 +21,36 @@ static const unsigned short opt_flag; /* useful in option struct declaration */
 
 static int short_options(const int *argc, char ** argv){
   /* Process Short options only with getop and return optind*/
-  unsigned short aflag,bflag,cflag = 0;
-  char *cvalue,*dvalue = NULL;
+  unsigned short actionFlag = 0;
+  char *path = NULL;
+  int nsec;
 
   int opt; 
-  while((opt = getopt(*argc,argv,"abc:d:")) != 0){
+  while((opt = getopt(*argc,argv,"Lht:p:")) != 0){
     switch(opt){
-    case 'a':
-      aflag = 1; 
+    case 'L':
+      actionFlag = 2;
       break;
-    case 'b':
-      bflag = 1; 
+    case 'h':
+      actionFlag = 1;
       break; 
-    case 'c':
-      cvalue = optarg; 
+    case 't':
+      nsec = atoi(optarg);
       break;
-    case 'd': 
-      dvalue = optarg; 
+    case 'p': 
+      path  = optarg; 
       break;
     case '?': 			/* failed to process arg */
-      if (optopt == 'c'||optopt == 'd')
+      if (optopt == 't'||optopt == 'p')
 	fprintf(stderr, "Option -%c requires an argument\n",optopt);
       else if (isprint (optopt))
 	fprintf(stderr,"Unknown option -%c\n",optopt);
       else 
 	fprintf(stderr,"Unkown option character `\\x%x .\n", optopt);
       return -1;
-    default:
-      abort();
+    default:			/* No arguments provided */
+      fprintf(stderr, "Usage: %s [-Lh][-t nsec] [-p path] ...\n",argv[0]);
+      exit(EXIT_FAILURE);
     }
   }
   return optind; 		/* last position in argv */
