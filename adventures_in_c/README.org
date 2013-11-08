@@ -31,4 +31,4 @@
    very repetitive. So as I find my way around C, I thought
    understanding how to handle commandline arguments using available
    library would be a good lesson on working with the language. What is
-   learned here I have already used in my ongoing project AudioManager!
+   learned here I have already used in my ongoing project [[https://github.com/nicmollel/AudioManager][AudioManager]]!
