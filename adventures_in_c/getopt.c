@@ -17,10 +17,31 @@
 #include <unistd.h> 		/* getopt */
 #include <getopt.h> 		/* getopt_long, getopt_long_only */
 #include <spawn.h>
+#include <pwd.h>		/* passwd structure */
+#include <errno.h>
 #include <sys/stat.h>
 #include <sys/types.h> 
 
 static const unsigned short opt_flag; /* useful in option struct declaration */
+
+static char  *gethomedir(void){
+  /* Return the current user home directory irrespctive of the value of
+     HOME environment variable */
+  struct passwd *p;
+  errno = 0;
+  p = getpwuid(getuid());
+  if (p)
+    return p->pw_dir;		/* on some system, fancy getenv("HOME") */
+  else{
+    if (errno){
+      perror("getpwuid");
+      exit(EXIT_FAILURE);
+    }
+    return NULL;
+  }
+
+}
+
 static int list_path(char *path){
   /* If the file exists, spawn `ls` on it */
   struct stat sb;
@@ -41,7 +62,8 @@ static int list_path(char *path){
       perror("posix_spawn");
       exit(EXIT_FAILURE);
     }
-  }
+  }else 
+    fprintf(stdout,"FILE:%s\n",path);
 
   return 0;
 }
