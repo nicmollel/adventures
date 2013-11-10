@@ -161,7 +161,7 @@
      #+BEGIN_SRC lisp
      ./armcl
      ?(ccl:rebuild-ccl :full t)
-     #+ENG_SRC 
+     #+END_SRC 
      When updating from the repository, run ~svn update~ and repeat
      the steps above! 
    - [2013-08-09 Fri], *Self Hosted Email*

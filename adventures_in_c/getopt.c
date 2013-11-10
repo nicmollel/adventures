@@ -16,8 +16,35 @@
 #include <stdlib.h>
 #include <unistd.h> 		/* getopt */
 #include <getopt.h> 		/* getopt_long, getopt_long_only */
+#include <spawn.h>
+#include <sys/stat.h>
+#include <sys/types.h> 
 
 static const unsigned short opt_flag; /* useful in option struct declaration */
+static int list_path(char *path){
+  /* If the file exists, spawn `ls` on it */
+  struct stat sb;
+  pid_t pid;
+  char *const ls[] = {
+    "ls",
+    "-l",
+    path,
+    NULL};
+
+  if (stat(path,&sb) != 0){
+    perror("stat");
+    exit(EXIT_FAILURE);
+  }
+
+  if(S_ISDIR(sb.st_mode)){
+    if(posix_spawnp(&pid,ls[0],NULL,NULL,ls,NULL) != 0){
+      perror("posix_spawn");
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  return 0;
+}
 
 static int short_options(const int *argc, char ** argv){
   /* Process Short options only with getop and return optind*/
