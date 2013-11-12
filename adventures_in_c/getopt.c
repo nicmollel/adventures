@@ -24,6 +24,9 @@
 
 static const unsigned short opt_flag; /* useful in option struct declaration */
 
+static void *run(const unsigned short *actionFlag,
+		 char *path,const int *nsec);
+
 static char  *gethomedir(void){
   /* Return the current user home directory irrespctive of the value of
      HOME environment variable */
@@ -64,7 +67,6 @@ static int list_path(char *path){
     }
   }else 
     fprintf(stdout,"FILE:%s\n",path);
-
   return 0;
 }
 
@@ -72,47 +74,78 @@ static int short_options(const int *argc, char ** argv){
   /* Process Short options only with getop and return optind*/
   unsigned short actionFlag = 0;
   char *path = NULL;
-  int nsec;
+  int nsec = 0;
 
-  int opt; 
-  while((opt = getopt(*argc,argv,"Lht:p:")) != 0){
-    switch(opt){
-    case 'L':
-      actionFlag = 2;
-      break;
-    case 'h':
-      actionFlag = 1;
-      break; 
-    case 't':
-      nsec = atoi(optarg);
-      break;
-    case 'p': 
-      path  = optarg; 
-      break;
-    case '?': 			/* failed to process arg */
-      if (optopt == 't'||optopt == 'p')
-	fprintf(stderr, "Option -%c requires an argument\n",optopt);
-      else if (isprint (optopt))
-	fprintf(stderr,"Unknown option -%c\n",optopt);
-      else 
-	fprintf(stderr,"Unkown option character `\\x%x .\n", optopt);
-      return -1;
-    default:			/* No arguments provided */
-      fprintf(stderr, "Usage: %s [-Lh][-t nsec] [-p path] ...\n",argv[0]);
-      exit(EXIT_FAILURE);
+  if (*argc <= 1){
+    /* No arguments provided */
+    fprintf(stderr, "Usage: %s [-Lh][-t nsec] [-p path] ...\n",argv[0]);
+    exit(EXIT_FAILURE);
+  } else {
+
+    int opt; 
+    while((opt = getopt(*argc,argv,"Lht:p:")) != -1){
+      switch(opt){
+      case 'L':
+	actionFlag = 2;
+	break;
+      case 'h':
+	actionFlag = 1;
+	break; 
+      case 't':
+	nsec = atoi(optarg);
+	break;
+      case 'p': 
+	path  = optarg; 
+	break;
+      case '?': 			/* failed to process arg */
+	if (optopt == 't'||optopt == 'p')
+	  fprintf(stderr, "Option -%c requires an argument\n",optopt);
+	else if (isprint (optopt))
+	  fprintf(stderr,"Unknown option -%c\n",optopt);
+	else 
+	  fprintf(stderr,"Unkown option character `\\x%x .\n", optopt);
+	exit(EXIT_FAILURE);
+      }
     }
   }
+  
+  run(&actionFlag,path,&nsec);
+
   return optind; 		/* last position in argv */
 }
 
+static void *run(const unsigned short *actionFlag,
+		 char *path,const int *nsec)
+{
+  if (path)
+    list_path(path);
+  else{
+    path = gethomedir();
+    switch (*actionFlag){
+    case 1: 
+      fprintf(stdout,"HOME:%s\n",path);
+      break;
+    case 2:
+      list_path(path);
+      break;
+    }
+  }
+
+  if(*nsec){
+    fprintf(stdout,"sleeping for %dsec....\n",*nsec);
+    fflush(stdout);
+    sleep(*nsec);
+    fprintf(stdout,"DONE\n");
+  }
+
+  return NULL;
+}
 int main(const int argc, char **argv){
   /*
     main is how the outside world gets into the application/this file
     and cannot therefore be decrared as static!
   */
-  int post_optc;
-  if (argc > 0)
-    post_optc = short_options(&argc,argv);
+  int post_opt = short_options(&argc,argv);
 
   return 0;
 }
