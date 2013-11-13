@@ -1,0 +1,30 @@
+;;; -*- mode: org; fill-column: 72; coding: utf-8; -*-
+
+#+TITLE:     Adventures In Common Lisp
+#+AUTHOR:    Nic M
+#+DATE:      November  2013
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/$
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+* Adventures in Common Lisp
+** Binary IO
+   This is just a reproduction of the code from /Practical:Parsing
+   Binary FIles/ in ~Practical Common Lisp~. I don't intend to change
+   the code unless necessary and depending on how this goes, I will go
+   on and build the rest of MP3 related chapters from the book. Also if
+   all goes well, I might use the work to take a look at this post I
+   have wanted to study on building an MP3 decoder in Haskell. This is
+   what I have in mind for this side of the project
+
+   - Parse Binary Files
+   - Parse MP3 Data
+   - Decode MP3 Data
+   - Shoutcast Server? Is this what Icecast uses?
+   - Online Radio
+
+   Those are just dreams and dreaming never does no harm so I will go
+   ahead and do so! 
+   
