@@ -10,12 +10,22 @@
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 * Adventures in Common Lisp
+  Another prong on my going take on programming, language learning and
+  development of habit. I have played in Common Lisp for a while now and
+  I think I have passable knowledge but I have yet to write something
+  useful in the language and I am hoping that through the habits
+  developed in this exercise, that is going to change. I am not going to
+  set many goals but to write some code here few times a week and write
+  something every day here, in C or Python later when it joins the
+  club.
+  
 ** Binary IO
+   [2013-11-13 Wed]
    This is just a reproduction of the code from /Practical:Parsing
-   Binary FIles/ in ~Practical Common Lisp~. I don't intend to change
+   Binary Files/ in ~Practical Common Lisp~. I don't intend to change
    the code unless necessary and depending on how this goes, I will go
    on and build the rest of MP3 related chapters from the book. Also if
-   all goes well, I might use the work to take a look at this post I
+   all goes well, I might use the work to take a look at this [[http://blog.bjrn.se/2008/10/lets-build-mp3-decoder.html][post]] I
    have wanted to study on building an MP3 decoder in Haskell. This is
    what I have in mind for this side of the project
 
@@ -24,6 +34,7 @@
    - Decode MP3 Data
    - Shoutcast Server? Is this what Icecast uses?
    - Online Radio
+   - Make a commandline app for the hell of it with CLON
 
    Those are just dreams and dreaming never does no harm so I will go
    ahead and do so! 
