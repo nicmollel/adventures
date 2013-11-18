@@ -7,4 +7,13 @@
 
 (defpackage :binary-io
   (:nicknames :binary-data)		;Name in the book
-  (:use :cl :alexandria))
+  (:use :cl :alexandria)
+  (:export :define-binary-class
+	   :define-tagged-binary-class
+	   :define-binary-type
+	   :read-value
+	   :write-value
+	   :*in-progress-objects*
+	   :parent-of-type
+	   :current-binary-object
+	   :+null+))

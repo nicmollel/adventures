@@ -9,7 +9,7 @@
 
 (in-package :binary-io-asd)
 
-(defvar *binary-io-version* "0.1"
+(defvar *binary-io-version* "1.0"
   "A string denoting current version of BINARY-IO")
 
 (export '*binary-io-version*)
