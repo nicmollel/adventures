@@ -143,4 +143,4 @@
 				  ,@body))
 	  ,(destructuring-bind ((out value) &body body) (rest (assoc :writer spec))
 			       `(defmethod write-value ((,type (eql ',name)) ,out ,value &key ,@args)
-				  ,body)))))))
+				  ,@body)))))))
