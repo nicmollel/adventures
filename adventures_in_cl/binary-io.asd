@@ -19,4 +19,4 @@
   :version #.*binary-io-version*
   :depends-on (:alexandria)
   :components ((:file "packages")
-	       (:file "binary-io")))
+	       (:file "binary-io" :depends-on ("packages"))))

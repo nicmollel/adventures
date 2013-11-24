@@ -241,10 +241,26 @@
   doing so! 
 ** Bill of Material 
 ** AudioEngine
+** Radio Links
+   [2013-11-20 Wed]
+   The streaming project above is complete and I have been using it for
+   sometime. However, after setting it up, I wanted to use it to do more
+   than just stream from my computer or iOS devices. I wanted to use
+   ~mpd~ and be able to play stations directly when I wanted. Even
+   though there is many radio stations online today, most are flash
+   streaming and it becomes a pain to try to find the actual streaming
+   URL. So I have been slowly collecting good radio links that stream
+   without flash. I came across these here today and figured I should
+   not them here so I can remember to transfer to ~mpd~ playlist.
+
+   Links
+   - NPR All Songs 24/7
+     http://sc8.iad.llnw.net:80/stream/npr_music2
+   - NPR Program stream
+     http://www.npr.org/streams/mp3/nprlive24.pls 
 ** Links
    - PiFi Mini, http://goo.gl/Bfhx8X
    - http://drewlustro.com/hi-fi-audio-via-airplay-on-raspberry-pi
    - Rpi, Shairport and USB Audio, http://goo.gl/BpHOSb 
    - Raspberry Pi shairport build instruction
      http://goo.gl/9xpNqz
-     
