@@ -17,7 +17,9 @@
 (asdf:defsystem :id3v2
   :serial t
   :version #.*id3v2-version*
-  :depends-on (:alexandria :binary-io :uiop/pathname)
-  :component ((:file "packages")
+  :depends-on (:alexandria :binary-io)	;UIOP/PATHNAME is part of ASDF
+					;and should be loaded loaded at
+					;this time
+  :components ((:file "packages")
 	      (:file "id3v2" :depends-on ("packages")))) 
 

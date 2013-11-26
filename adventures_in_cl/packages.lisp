@@ -23,7 +23,7 @@
 	:alexandria
 	:binary-io
 	:uiop/pathname)
-  (#:export
+  (:export
    #:read-id3
    #:mp3-p
    #:id3-p

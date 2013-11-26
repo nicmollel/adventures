@@ -16,8 +16,7 @@
 	   (loop :for low-bit :downfrom (* bits-per-byte (1- bytes)) :to 0 :by bits-per-byte
 	      :do (write-byte (ldb (byte bits-per-byte low-bit) value) out))))
 
-(define-binary-type id3-tag-size ()
-  (unsigned-integer :bytes 4 :bits-per-byte 7))
+(define-binary-type id3-tag-size ()(unsigned-integer :bytes 4 :bits-per-byte 7))
 
 (define-binary-type u1 () (unsigned-integer :bytes 1 :bits-per-byte 8))
 (define-binary-type u2 () (unsigned-integer :bytes 2 :bits-per-byte 8))
@@ -46,6 +45,7 @@
 	      :do (write-value character-type out char)
 	      :finally (write-value character-type out terminator))))
 
+;;; ISO-8859-1 
 (define-binary-type iso-8859-1-char ()
   (:reader (in)
 	   (let ((code (read-byte in)))
@@ -58,7 +58,7 @@
 	   (let ((code (char-code char)))
 	     (if (<= 0 code #xff)
 		 (write-byte code out)
-		 (error "Illigal character for iso-8859-1 encoding: character: ~c with code: ~d"
+		 (error "Illigal character for iso-8859-1 encoding: character: ~c with char-code: ~d"
 			char code)))))
 
 (define-binary-type iso-8859-1-string (length)
@@ -66,3 +66,60 @@
 
 (define-binary-type iso-8859-1-terminated-string (terminator)
   (generic-terminated-string :terminator terminator :character-type 'iso-8859-1-char))
+
+;;; UCS-2 
+(define-binary-type ucs-2-char (swap)
+  (:reader (in)
+	   (let ((code (read-value 'u2 in)))
+	     #-sbcl
+	     (or (code-char code) (error "Character code ~d not supported" code))
+	     #+sbcl
+	     (code-char code)))
+  (:writer (out char)
+	   (let ((code (char-code char)))
+	     (unless (<= 0 code #xffff)
+	       (error "Illigal character for UCS-2 encoding: ~c with char-code: ~d"
+		      char code))
+	     (when swap (setf code (swap-bytes code)))
+	     (write-value 'u2 out code))))
+
+(defun swap-bytes (code)
+  (assert (<= code #xffff))
+  (rotatef (ldb (byte 8 0) code) (ldb (byte 8 8) code))
+  code)
+
+(define-binary-type ucs-2-char-big-endian () (ucs-2-char :swap nil))
+(define-binary-type ucs-2-char-little-endian () (ucs-2-char :swap t))
+
+(defun ucs-2-char-type (byte-order-mark)
+  (ecase byte-order-mark
+    (#xfeff 'ucs-2-char-big-endian)
+    (#xfffe 'ucs-2-char-little-endian)))
+
+(define-binary-type ucs-2-string (length)
+  (:reader (in)
+	   (let ((byte-order-mark (read-value 'u2 in))
+		 (characters (1- (/ length 2))))
+	     (read-value 'generic-string in :length characters
+			 :character-type (ucs-2-char-type byte-order-mark))))
+  (:writer (out string)
+	   (write-value 'u2 out #xfeff)
+	   (write-value 'generic-string out string :length (length string)
+			:character-type (ucs-2-char-type #xfeff))))
+
+(define-binary-type ucs-2-terminated-string (terminator)
+  (:reader (in)
+	   (let ((byte-order-mark (read-value 'u2 in)))
+	     (read-value
+	      'generic-terminated-string
+	      in
+	      :terminator terminator
+	      :character-type (ucs-2-char-type byte-order-mark))))
+  (:writer (out string)
+	   (write-value 'u2 out #xfeff)
+	   (write-value
+	    'generic-terminated-string
+	    out
+	    string 
+	    :terminator terminator
+	    :character-type (ucs-2-char-type #xfeff))))
