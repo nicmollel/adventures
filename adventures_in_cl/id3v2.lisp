@@ -123,3 +123,36 @@
 	    string 
 	    :terminator terminator
 	    :character-type (ucs-2-char-type #xfeff))))
+
+;;; ID3-TAG
+
+;;; The layout of the tag header is as follow:
+;; ID3/file identifier      "ID3"
+;; ID3 version              $02 00
+;; ID3 flags                %xx000000
+;; ID3 size             4 * %0xxxxxxx
+
+(define-binary-class id3-tag ()
+  ((identifier (iso-8859-1-string :length 3))
+   (major-version u1)
+   (revision u1)
+   (flags u1)
+   (size id3-tag-size)))
+
+(defun read-id3 (file)
+  (with-open-file (in file :element-type '(unsigned-byte 8))
+    (read-value 'id3-tag in)))
+
+(defun show-tag-header (file)
+  (with-slots (identifier major-version revision flags size) (read-id3 file)
+    (format t "~a ~d.~d ~8,'0b ~d bytes -- ~a~%"
+	    identifier major-version revision flags size (enough-namestring file))))
+
+(defun mp3-p (file)
+  (and
+   (not (directory-pathname-p file))
+   (string-equal "mp3" (pathname-type file))))
+
+(defun id3-p (file)
+  (with-open-file (in file :element-type '(unsigned-byte 8))
+    (string= "ID3" (read-value 'iso-8859-1-string in :length 3))))
