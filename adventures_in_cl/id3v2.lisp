@@ -137,7 +137,8 @@
    (major-version u1)
    (revision u1)
    (flags u1)
-   (size id3-tag-size)))
+   (size id3-tag-size)
+   (frames (id3-frames :tag-size size))))
 
 (defun read-id3 (file)
   (with-open-file (in file :element-type '(unsigned-byte 8))
@@ -156,3 +157,56 @@
 (defun id3-p (file)
   (with-open-file (in file :element-type '(unsigned-byte 8))
     (string= "ID3" (read-value 'iso-8859-1-string in :length 3))))
+
+;;; ID3 Frames
+
+(define-tagged-binary-class id3-frame ()
+  ((id (frame-id :length 3))
+   (size u3))
+  (:dispatch (find-frame-class id)))
+
+(define-binary-class generic-frame (id3-frame)
+  ((data (raw-bytes :size size))))
+
+(define-binary-type raw-bytes (size)
+  (:reader (in)
+	   (let ((buf (make-array size :element-type '(unsigned-byte 8))))
+	     (read-sequence buf in)
+	     buf))
+  (:writer (out buf)
+	   (write-sequence buf out)))
+
+(defun find-frame-class (id)
+  (declare (ignore id))
+  'generic-frame)
+
+(define-binary-type id3-frames (tag-size)
+  (:reader (in)
+	   (loop :with to-read = tag-size
+	      :while (plusp to-read)
+	      :for frame = (read-frame in)
+	      :while frame
+	      :do (decf to-read (+ 6 (size frame)))
+	      :collect frame
+	      :finally (loop :repeat (1- to-read) :do (read-byte in))))
+  (:writer (out frames)
+	   (loop :with to-write = tag-size
+	      :for frame :in frames
+	      :do (write-value 'id3-frame out frame)
+	      (decf to-write (+ 6 (size frame)))
+	      :finally (loop :repeat to-write :do (write-byte 0 out)))))
+
+(define-condition in-padding () ())
+
+(define-binary-type frame-id (length)
+  (:reader (in)
+	   (let ((first-byte (read-byte in)))
+	     (when (= first-byte 0) (signal 'in-padding))
+	     (let ((rest (read-value 'iso-8859-1-string in :length (1- length))))
+	       (concatenate 'string (string (code-char first-byte)) rest))))
+  (:writer (out id)
+	   (write-value 'iso-8859-1-string out id :length length)))
+
+(defun read-frame (in)
+  (handler-case (read-value 'id3-frame in)
+    (in-padding () nil)))
