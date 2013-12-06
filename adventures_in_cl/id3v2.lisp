@@ -132,13 +132,38 @@
 ;; ID3 flags                %xx000000
 ;; ID3 size             4 * %0xxxxxxx
 
-(define-binary-class id3-tag ()
+(define-tagged-binary-class id3-tag ()
   ((identifier (iso-8859-1-string :length 3))
    (major-version u1)
    (revision u1)
    (flags u1)
-   (size id3-tag-size)
-   (frames (id3-frames :tag-size size))))
+   (size id3-tag-size))
+  (:dispatch
+   (ecase major-version
+     (2 'id3v2.2-tag)
+     (3 'id3v2.3-tag))))
+
+(define-binary-class id3v2.2-tag (id3-tag)
+  ((frames (id3-frames :tag-size size :frame-type 'id3v2.2-frame))))
+
+(define-binary-type optional (type if)
+  (:reader (in)
+	   (when if (read-value type in)))
+  (:writer (out value)
+	   (when if (write-value type out value))))
+
+(define-binary-class id3v2.3-tag (id3-tag)
+  ((extended-header-size (optional :type 'u4 :if (extended-p flags)))
+   (extra-flags (optional :type 'u2 :if (extended-p flags)))
+   (padding-size (optional :type 'u4 :if (extended-p flags)))
+   (crc (optional :type 'u4 :if (crc-p flags extra-flags)))
+   (frames (id3-frames :tag-size size :frame-type 'id3v2.3-frame))))
+
+(defun extended-p (flags)
+  (logbitp 6 flags))
+
+(defun crc-p (flags extra-flags)
+  (and (extended-p flags) (logbitp 15 extra-flags)))
 
 (defun read-id3 (file)
   (with-open-file (in file :element-type '(unsigned-byte 8))
@@ -160,13 +185,48 @@
 
 ;;; ID3 Frames
 
-(define-tagged-binary-class id3-frame ()
+(define-tagged-binary-class id3v2.2-frame ()
   ((id (frame-id :length 3))
    (size u3))
   (:dispatch (find-frame-class id)))
 
-(define-binary-class generic-frame (id3-frame)
-  ((data (raw-bytes :size size))))
+(defmethod frame-header-size ((frame id3v2.2-frame)) 6)
+
+(define-tagged-binary-class id3v2.3-frame ()
+  ((id (frame-id :length 4))
+   (size u4)
+   (flags u2)
+   (decompressed-size (optional :type 'u4 :if (frame-compressed-p flags)))
+   (encryption-scheme (optional :type 'u1 :if (frame-encrypted-p flags)))
+   (grouping-identity (optional :type 'u1 :if (frame-grouped-p flags))))
+  (:dispatch (find-frame-class id)))
+
+(defmethod frame-header-size ((frame id3v2.3-frame)) 10)
+
+(defun frame-compressed-p (flags) (logbitp 7 flags))
+
+(defun frame-encrypted-p (flags) (logbitp 6 flags))
+
+(defun frame-grouped-p (flags) (logbitp 5 flags))
+
+(defgeneric data-bytes (frame))
+
+(defmethod data-bytes ((frame id3v2.2-frame))
+  (size frame))
+
+(defmethod data-bytes ((frame id3v2.3-frame))
+  (let ((flags (flags frame)))
+    (- (size frame)
+       (if (frame-compressed-p flags) 4 0)
+       (if (frame-encrypted-p flags) 1 0)
+       (if (frame-grouped-p flags) 1 0))))
+
+(define-binary-class generic-frame ()
+  ((data (raw-bytes :size (data-bytes (current-binary-object))))))
+
+(define-binary-class generic-frame-v2.2 (id3v2.2-frame generic-frame) ())
+
+(define-binary-class generic-frame-v2.3 (id3v2.3-frame generic-frame) ())
 
 (define-binary-type raw-bytes (size)
   (:reader (in)
@@ -177,23 +237,24 @@
 	   (write-sequence buf out)))
 
 (defun find-frame-class (id)
-  (declare (ignore id))
-  'generic-frame)
+  (ecase (length id)
+    (3 'generic-frame-v2.2)
+    (4 'generic-frame-v2.3)))
 
-(define-binary-type id3-frames (tag-size)
+(define-binary-type id3-frames (tag-size frame-type)
   (:reader (in)
 	   (loop :with to-read = tag-size
 	      :while (plusp to-read)
-	      :for frame = (read-frame in)
+	      :for frame = (read-frame frame-type in)
 	      :while frame
-	      :do (decf to-read (+ 6 (size frame)))
+	      :do (decf to-read (+ (frame-header-size frame) (size frame)))
 	      :collect frame
 	      :finally (loop :repeat (1- to-read) :do (read-byte in))))
   (:writer (out frames)
 	   (loop :with to-write = tag-size
 	      :for frame :in frames
-	      :do (write-value 'id3-frame out frame)
-	      (decf to-write (+ 6 (size frame)))
+	      :do (write-value frame-type out frame)
+	      (decf to-write (+ (frame-header-size frame) (size frame)))
 	      :finally (loop :repeat to-write :do (write-byte 0 out)))))
 
 (define-condition in-padding () ())
@@ -207,6 +268,8 @@
   (:writer (out id)
 	   (write-value 'iso-8859-1-string out id :length length)))
 
-(defun read-frame (in)
-  (handler-case (read-value 'id3-frame in)
+(defun read-frame (frame-type in)
+  (handler-case (read-value frame-type in)
     (in-padding () nil)))
+
+(defgeneric frame-header-size (frame))
